@@ -3,33 +3,43 @@ package com.example.todolist.todo.controller;
 import com.example.todolist.todo.dto.ToDoDto;
 import com.example.todolist.todo.service.ToDoService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @AllArgsConstructor
+@Slf4j
 @RestController
 @RequestMapping("/todo")
 public class ToDoController {
     private ToDoService toDoService;
 
     @PostMapping("/")
-    public ResponseEntity<Map<String,Object>> save(ToDoDto toDoDto) {
-        toDoService.insertToDo(toDoDto);
+    public ResponseEntity<ToDoDto> save(@RequestBody ToDoDto toDoDto) {
+        log.info("{}", toDoDto);
 
-        return new ResponseEntity<>(ok(), HttpStatus.OK);
+        ToDoDto res = toDoService.insertToDo(toDoDto);
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ToDoDto> get(@PathVariable("id") int id) {
+        ToDoDto toDoDto = toDoService.selectToDo(id);
+
+        return new ResponseEntity<>(toDoDto, HttpStatus.OK);
+    }
+
+
     private Map<String, Object> ok() {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> body = new HashMap<>();
 
-        map.put("Status Code", "200 Ok");
+        body.put("Status Code", "200 Ok");
 
-        return map;
+        return body;
     }
 }

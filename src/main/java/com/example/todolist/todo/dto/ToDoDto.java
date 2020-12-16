@@ -1,6 +1,7 @@
 package com.example.todolist.todo.dto;
 
 import com.example.todolist.todo.entity.ToDo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @NoArgsConstructor
@@ -9,7 +10,10 @@ import lombok.*;
 @ToString
 public class ToDoDto {
     private int id;
+
     private String content;
+
+    @JsonProperty("isDone")
     private boolean isDone;
 
     @Builder
@@ -21,5 +25,9 @@ public class ToDoDto {
 
     public ToDo toEntity() {
         return ToDo.builder().id(id).content(content).isDone(isDone).build();
+    }
+
+    public static ToDoDto of(ToDo entity) {
+        return new ToDoDto(entity.getId(), entity.getContent(), entity.isDone());
     }
 }
