@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -25,6 +26,13 @@ public class ToDoController {
         ToDoDto res = toDoService.insertToDo(toDoDto);
 
         return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<ToDoDto>> getAll(@RequestParam(value = "offset", required = false, defaultValue = "0") int offset) {
+        List<ToDoDto> list = toDoService.selectAllToDoPage(offset);
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
