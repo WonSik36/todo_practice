@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 @Service
 @Transactional
 public class ToDoServiceImpl implements ToDoService {
-    private ToDoRepository toDoRepository;
+    private final ToDoRepository toDoRepository;
 
     public ToDoDto insertToDo(ToDoDto toDoDto) {
         ToDo toDo = toDoRepository.save(toDoDto.toEntity());
@@ -25,7 +25,7 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     public ToDoDto selectToDo(int id) {
-        return toDoRepository.findOneByIsActive(id)
+        return toDoRepository.findOneById(id)
                 .map(ToDoDto::of)
                 .orElseThrow(NoSuchElementException::new);
     }
@@ -37,5 +37,18 @@ public class ToDoServiceImpl implements ToDoService {
             throw new NoSuchElementException();
 
         return toDos.stream().map(ToDoDto::of).collect(toList());
+    }
+
+    public ToDoDto updateToDo(ToDoDto toDoDto) {
+        ToDo toDo = toDoRepository.save(toDoDto.toEntity());
+
+        return ToDoDto.of(toDo);
+    }
+
+    public void deleteToDo(int id) {
+        ToDo toDo = toDoRepository.findOneById(id)
+                .orElseThrow();
+
+        toDo.delete();
     }
 }

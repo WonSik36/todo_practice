@@ -42,6 +42,19 @@ public class ToDoController {
         return new ResponseEntity<>(toDoDto, HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ToDoDto> update(@PathVariable("id") int id, @RequestBody ToDoDto toDoDto) {
+        ToDoDto res = toDoService.updateToDo(toDoDto);
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") int id) {
+        toDoService.deleteToDo(id);
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 
     private Map<String, Object> ok() {
         Map<String, Object> body = new HashMap<>();

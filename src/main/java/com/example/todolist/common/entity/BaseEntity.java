@@ -27,4 +27,8 @@ public abstract class BaseEntity {
     private LocalDateTime updatedAt;
 
     private boolean isActive = true;
+
+    public void delete() {
+        this.isActive = false;
+    }
 }

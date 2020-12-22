@@ -10,4 +10,8 @@ public interface ToDoService {
     ToDoDto selectToDo(int id);
 
     List<ToDoDto> selectAllToDoPage(int offset);
+
+    ToDoDto updateToDo(ToDoDto toDoDto);
+
+    void deleteToDo(int id);
 }

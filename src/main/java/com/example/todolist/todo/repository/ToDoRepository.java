@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ToDoRepository extends JpaRepository<ToDo, Integer> {
 
     @Query("SELECT t FROM ToDo t WHERE t.id=:id AND t.isActive=true")
-    Optional<ToDo> findOneByIsActive(int id);
+    Optional<ToDo> findOneById(int id);
 
     @Query("SELECT t FROM ToDo t WHERE t.isActive=true ORDER BY t.id DESC")
     List<ToDo> findAllPage(Pageable pageable);
