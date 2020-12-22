@@ -8,16 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @AllArgsConstructor
 @Slf4j
 @RestController
 @RequestMapping("/todo")
 public class ToDoController {
-    private ToDoService toDoService;
+    private final ToDoService toDoService;
 
     @PostMapping("/")
     public ResponseEntity<ToDoDto> save(@RequestBody ToDoDto toDoDto) {
@@ -44,6 +42,8 @@ public class ToDoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ToDoDto> update(@PathVariable("id") int id, @RequestBody ToDoDto toDoDto) {
+        toDoDto.setId(id);
+
         ToDoDto res = toDoService.updateToDo(toDoDto);
 
         return new ResponseEntity<>(res, HttpStatus.OK);
@@ -54,13 +54,5 @@ public class ToDoController {
         toDoService.deleteToDo(id);
 
         return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-
-    private Map<String, Object> ok() {
-        Map<String, Object> body = new HashMap<>();
-
-        body.put("Status Code", "200 Ok");
-
-        return body;
     }
 }

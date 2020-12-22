@@ -40,6 +40,9 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     public ToDoDto updateToDo(ToDoDto toDoDto) {
+        toDoRepository.findOneById(toDoDto.getId())
+                .orElseThrow();
+
         ToDo toDo = toDoRepository.save(toDoDto.toEntity());
 
         return ToDoDto.of(toDo);
