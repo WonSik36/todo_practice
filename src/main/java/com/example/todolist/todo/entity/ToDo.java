@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -17,14 +16,20 @@ public class ToDo extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
     private boolean isDone;
 
+    @Enumerated(EnumType.STRING)
+    private Importance importance;
+
     @Builder
-    public ToDo(int id, String content, boolean isDone) {
+    public ToDo(int id, String content, boolean isDone, Importance importance) {
         this.id = id;
         this.content = content;
         this.isDone = isDone;
+        this.importance = importance;
     }
 }

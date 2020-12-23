@@ -25,6 +25,18 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> badRequestHandler(IllegalArgumentException e) {
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("Status Code", "400 Bad Request");
+        body.put("errorMsg", e.getMessage());
+
+        log.debug("{}", e);
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> internalServerErrorHandler(Exception e) {
         Map<String, Object> body = new HashMap<>();
