@@ -1,17 +1,19 @@
 package com.example.todolist.todo.service;
 
-import com.example.todolist.todo.dto.ToDoDto;
+import com.example.todolist.todo.dto.CreateToDoRequest;
+import com.example.todolist.todo.dto.ToDoResponse;
+import com.example.todolist.todo.dto.UpdateToDoRequest;
 
 import java.util.List;
 
 public interface ToDoService {
-    ToDoDto insertToDo(ToDoDto toDoDto);
+    ToDoResponse insertToDo(CreateToDoRequest toDoDto);
 
-    ToDoDto selectToDo(int id);
+    ToDoResponse selectToDo(int id);
 
-    List<ToDoDto> selectAllToDoPage(int offset);
+    List<ToDoResponse> selectAllToDoPage(int offset);
 
-    ToDoDto updateToDo(ToDoDto toDoDto);
+    ToDoResponse updateToDo(UpdateToDoRequest toDoDto);
 
     void deleteToDo(int id);
 }

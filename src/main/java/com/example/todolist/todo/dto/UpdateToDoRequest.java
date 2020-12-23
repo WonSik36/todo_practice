@@ -5,12 +5,15 @@ import com.example.todolist.todo.entity.ToDo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-public class ToDoDto {
-    private int id;
+public class UpdateToDoRequest {
+    @NotNull(message = "must not be null")
+    private Integer id;
 
     private String content;
 
@@ -20,7 +23,7 @@ public class ToDoDto {
     private Importance importance;
 
     @Builder
-    public ToDoDto(int id, String content, boolean isDone, Importance importance) {
+    public UpdateToDoRequest(int id, String content, boolean isDone, Importance importance) {
         this.id = id;
         this.content = content;
         this.isDone = isDone;
@@ -36,7 +39,7 @@ public class ToDoDto {
                 .build();
     }
 
-    public static ToDoDto of(ToDo entity) {
-        return new ToDoDto(entity.getId(), entity.getContent(), entity.isDone(), entity.getImportance());
+    public static UpdateToDoRequest of(ToDo entity) {
+        return new UpdateToDoRequest(entity.getId(), entity.getContent(), entity.isDone(), entity.getImportance());
     }
 }
