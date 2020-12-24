@@ -20,7 +20,7 @@ public class ToDoResponse {
     private Importance importance;
 
     @Builder
-    public ToDoResponse(int id, String content, boolean isDone, Importance importance) {
+    public ToDoResponse(Integer id, String content, boolean isDone, Importance importance) {
         this.id = id;
         this.content = content;
         this.isDone = isDone;

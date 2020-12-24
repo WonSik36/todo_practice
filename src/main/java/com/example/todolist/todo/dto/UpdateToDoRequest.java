@@ -23,7 +23,7 @@ public class UpdateToDoRequest {
     private Importance importance;
 
     @Builder
-    public UpdateToDoRequest(int id, String content, boolean isDone, Importance importance) {
+    public UpdateToDoRequest(Integer id, String content, boolean isDone, Importance importance) {
         this.id = id;
         this.content = content;
         this.isDone = isDone;
