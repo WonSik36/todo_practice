@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class ToDo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     private String content;
@@ -26,7 +26,7 @@ public class ToDo extends BaseEntity {
     private Importance importance;
 
     @Builder
-    public ToDo(int id, String content, boolean isDone, Importance importance) {
+    public ToDo(Integer id, String content, boolean isDone, Importance importance) {
         this.id = id;
         this.content = content;
         this.isDone = isDone;

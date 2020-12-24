@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @ToString
 public class ToDoResponse {
-    private int id;
+    private Integer id;
 
     private String content;
 
