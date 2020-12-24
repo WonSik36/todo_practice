@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
+@Table(name="to_do")
 public class ToDo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
