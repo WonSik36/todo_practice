@@ -5,11 +5,16 @@ import com.example.todolist.todo.entity.ToDo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 public class CreateToDoRequest {
+    @NotEmpty
+    private Integer listId;
+
     private String content;
 
     @JsonProperty("isDone")
@@ -18,7 +23,8 @@ public class CreateToDoRequest {
     private Importance importance;
 
     @Builder
-    public CreateToDoRequest(String content, boolean isDone, Importance importance) {
+    public CreateToDoRequest(Integer listId, String content, boolean isDone, Importance importance) {
+        this.listId = listId;
         this.content = content;
         this.isDone = isDone;
         this.importance = importance;
@@ -30,9 +36,5 @@ public class CreateToDoRequest {
                 .isDone(isDone)
                 .importance(importance)
                 .build();
-    }
-
-    public static CreateToDoRequest of(ToDo entity) {
-        return new CreateToDoRequest(entity.getContent(), entity.isDone(), entity.getImportance());
     }
 }

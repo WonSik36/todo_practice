@@ -38,8 +38,4 @@ public class UpdateToDoRequest {
                 .importance(importance)
                 .build();
     }
-
-    public static UpdateToDoRequest of(ToDo entity) {
-        return new UpdateToDoRequest(entity.getId(), entity.getContent(), entity.isDone(), entity.getImportance());
-    }
 }
