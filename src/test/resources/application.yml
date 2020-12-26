@@ -22,3 +22,6 @@ logging:
           descriptor:
             sql:
               BasicBinder: trace
+
+kafka:
+  bootstrapAddress: http://localhost:9092
