@@ -36,6 +36,7 @@ dependencies {
     compile 'io.springfox:springfox-swagger-ui:3.0.0'
     compile 'org.springframework.kafka:spring-kafka:2.5.10.RELEASE'
     compile 'org.springframework.kafka:spring-kafka-test:2.5.10.RELEASE'
+    testCompile 'com.h2database:h2:1.4.200'
 }
 
 test {

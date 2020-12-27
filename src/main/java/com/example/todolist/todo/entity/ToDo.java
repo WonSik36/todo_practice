@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name="to_do")
+@Where(clause="is_active=1")
 public class ToDo extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +29,7 @@ public class ToDo extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Importance importance;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "list_id")
     private ToDoList list;
 
