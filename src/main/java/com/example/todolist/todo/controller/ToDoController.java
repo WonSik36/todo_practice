@@ -1,7 +1,8 @@
 package com.example.todolist.todo.controller;
 
+import com.example.todolist.list.dto.ToDoListResponse;
+import com.example.todolist.list.service.ToDoListService;
 import com.example.todolist.todo.dto.*;
-import com.example.todolist.todo.service.ToDoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,48 +19,53 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("/todo")
+@RequestMapping("/todo/{listId}")
 public class ToDoController {
-    private final ToDoService toDoService;
+    private final ToDoListService toDoListService;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @PostMapping("/")
-    public ResponseEntity<ToDoResponse> save(@RequestBody CreateToDoRequest toDoDto) {
-        log.info("{}", toDoDto);
+    public ResponseEntity<Void> save(@PathVariable("listId") int listId,
+                                     @RequestBody CreateToDoRequest createRequest) {
+        log.info("{}", listId);
+        log.info("{}", createRequest);
 
-        ToDoResponse res = toDoService.insertToDo(toDoDto);
+        toDoListService.createToDo(listId, createRequest);
 
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<ToDoResponse>> getAll(@RequestParam(value = "offset", required = false, defaultValue = "0") int offset) {
-        List<ToDoResponse> list = toDoService.selectAllToDoPage(offset);
+    public ResponseEntity<List<ToDoResponse>> getAll(@PathVariable("listId") int listId) {
+        ToDoListResponse toDoList = toDoListService.readToDoList(listId);
+        List<ToDoResponse> list = toDoList.getToDos();
 
-        return new ResponseEntity<>(list, HttpStatus.OK);
+        return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ToDoResponse> get(@PathVariable("id") int id) {
-        ToDoResponse toDoDto = toDoService.selectToDo(id);
+    public ResponseEntity<ToDoResponse> get(@PathVariable("listId") int listId, @PathVariable("id") int id) {
+        ToDoResponse toDoDto = toDoListService.readToDo(listId, id);
 
-        return new ResponseEntity<>(toDoDto, HttpStatus.OK);
+        return ResponseEntity.ok().body(toDoDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ToDoResponse> update(@PathVariable("id") int id, @RequestBody @Valid UpdateToDoRequest toDoDto) {
+    public ResponseEntity<Void> update(@PathVariable("listId") int listId,
+                                               @PathVariable("id") int id,
+                                               @RequestBody @Valid UpdateToDoRequest toDoDto) {
         if (id != toDoDto.getId())
             throw new IllegalArgumentException("Resource Id is not match with body");
 
-        ToDoResponse res = toDoService.updateToDo(toDoDto);
+        toDoListService.updateToDo(listId, toDoDto);
 
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") int id) {
-        toDoService.deleteToDo(id);
+    public ResponseEntity<Void> delete(@PathVariable("listId") int listId, @PathVariable("id") int id) {
+        toDoListService.deleteToDo(listId, id);
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }

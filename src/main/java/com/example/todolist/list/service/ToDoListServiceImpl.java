@@ -4,6 +4,9 @@ import com.example.todolist.list.dto.CreateListRequest;
 import com.example.todolist.list.dto.ToDoListResponse;
 import com.example.todolist.list.entity.ToDoList;
 import com.example.todolist.list.repository.ToDoListRepository;
+import com.example.todolist.todo.dto.CreateToDoRequest;
+import com.example.todolist.todo.dto.ToDoResponse;
+import com.example.todolist.todo.dto.UpdateToDoRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +23,46 @@ public class ToDoListServiceImpl implements ToDoListService {
         ToDoList res = repository.save(dto.toEntity());
 
         return ToDoListResponse.of(res);
+    }
+
+    @Override
+    public ToDoListResponse readToDoList(int id) {
+        return repository.findById(id)
+                .map(ToDoListResponse::of)
+                .orElseThrow();
+    }
+
+    @Override
+    public ToDoResponse readToDo(int listId, int id) {
+        ToDoList list = repository.findById(listId)
+                .orElseThrow();
+
+        return ToDoResponse.of(list.readToDo(id));
+    }
+
+    @Override
+    public void createToDo(int listId, CreateToDoRequest createRequest) {
+        ToDoList list = repository.findById(listId)
+                .orElseThrow();
+
+        list.createToDo(createRequest);
+
+        repository.save(list);
+    }
+
+    @Override
+    public void updateToDo(int listId, UpdateToDoRequest updateRequest) {
+        ToDoList list = repository.findById(listId)
+                .orElseThrow();
+
+        list.updateToDo(updateRequest);
+    }
+
+    @Override
+    public void deleteToDo(int listId, int id) {
+        ToDoList list = repository.findById(listId)
+                .orElseThrow();
+
+        list.deleteToDo(id);
     }
 }

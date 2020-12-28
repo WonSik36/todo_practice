@@ -2,6 +2,8 @@ package com.example.todolist.todo.entity;
 
 import com.example.todolist.common.entity.BaseEntity;
 import com.example.todolist.list.entity.ToDoList;
+import com.example.todolist.todo.dto.CreateToDoRequest;
+import com.example.todolist.todo.dto.UpdateToDoRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -54,4 +56,19 @@ public class ToDo extends BaseEntity {
         this.isDone = other.isDone();
         this.importance = other.getImportance();
     }
+
+    public void update(UpdateToDoRequest updateRequest) {
+        this.content = updateRequest.getContent();
+        this.isDone = updateRequest.isDone();
+        this.importance = updateRequest.getImportance();
+    }
+
+    public static ToDo create(CreateToDoRequest createRequest) {
+        return ToDo.builder()
+                .content(createRequest.getContent())
+                .isDone(createRequest.isDone())
+                .importance(createRequest.getImportance())
+                .build();
+    }
+
 }
