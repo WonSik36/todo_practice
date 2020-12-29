@@ -46,7 +46,6 @@ public class ToDoList extends BaseEntity {
     public void createToDo(CreateToDoRequest createRequest) {
         ToDo toDo = ToDo.create(createRequest);
 
-        toDos.add(toDo);
         toDo.setToDoList(this);
     }
 

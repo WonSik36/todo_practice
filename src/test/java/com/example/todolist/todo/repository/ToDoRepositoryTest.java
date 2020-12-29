@@ -27,38 +27,36 @@ public class ToDoRepositoryTest {
     @Autowired
     private ToDoRepository toDoRepository;
 
-    private List<ToDo> list;
+    private ToDoList toDoList;
 
     @BeforeEach
     public void setUp() {
-        toDoListRepository.deleteAll();
         toDoRepository.deleteAll();
+        toDoListRepository.deleteAll();
 
-        ToDoList toDoList = ToDoList.builder().description("first one").build();
-        toDoList = toDoListRepository.save(toDoList);
+        toDoList = ToDoList.builder().description("first one").build();
 
-        list = new ArrayList<>();
         ToDo t1 = ToDo.builder().content("100").isDone(false).build();
         t1.setToDoList(toDoList);
+
         ToDo t2 = ToDo.builder().content("200").isDone(false).build();
         t2.setToDoList(toDoList);
+
         ToDo t3 = ToDo.builder().content("300").isDone(false).build();
         t3.setToDoList(toDoList);
+
         ToDo t4 = ToDo.builder().content("400").isDone(false).build();
         t4.setToDoList(toDoList);
+
         ToDo t5 = ToDo.builder().content("500").isDone(false).build();
         t5.setToDoList(toDoList);
 
-        list.add(t1);
-        list.add(t2);
-        list.add(t3);
-        list.add(t4);
-        list.add(t5);
+        toDoList = toDoListRepository.save(toDoList);
     }
 
     @Test
     public void testWhereClause() {
-        for(ToDo t : list) {
+        for(ToDo t : toDoList.getToDos()) {
             t.delete();
             toDoRepository.save(t);
         }
