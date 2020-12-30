@@ -25,3 +25,4 @@ logging:
 
 kafka:
   bootstrapAddress: http://localhost:9092
+  topic: topic001
