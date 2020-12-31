@@ -1,6 +1,7 @@
 package com.example.todolist.list.entity;
 
 import com.example.todolist.common.entity.BaseEntity;
+import com.example.todolist.list.dto.UpdateListRequest;
 import com.example.todolist.todo.dto.CreateToDoRequest;
 import com.example.todolist.todo.dto.UpdateToDoRequest;
 import com.example.todolist.todo.entity.ToDo;
@@ -34,6 +35,10 @@ public class ToDoList extends BaseEntity {
     public ToDoList(Integer id, String description) {
         this.id = id;
         this.description = description;
+    }
+
+    public void update(UpdateListRequest updateRequest) {
+        this.description = updateRequest.getDescription();
     }
 
     public ToDo readToDo(Integer id) {

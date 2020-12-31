@@ -2,6 +2,7 @@ package com.example.todolist.list.service;
 
 import com.example.todolist.list.dto.CreateListRequest;
 import com.example.todolist.list.dto.ToDoListResponse;
+import com.example.todolist.list.dto.UpdateListRequest;
 import com.example.todolist.list.entity.ToDoList;
 import com.example.todolist.list.repository.ToDoListRepository;
 import com.example.todolist.todo.dto.CreateToDoRequest;
@@ -30,6 +31,24 @@ public class ToDoListServiceImpl implements ToDoListService {
         return repository.findById(id)
                 .map(ToDoListResponse::of)
                 .orElseThrow();
+    }
+
+    @Override
+    public ToDoListResponse updateToDoList(UpdateListRequest dto) {
+        ToDoList res = repository.findById(dto.getId())
+                .orElseThrow();
+
+        res.update(dto);
+
+        return ToDoListResponse.of(res);
+    }
+
+    @Override
+    public void deleteToDoList(int id) {
+        ToDoList res = repository.findById(id)
+                .orElseThrow();
+
+        res.delete();
     }
 
     @Override
