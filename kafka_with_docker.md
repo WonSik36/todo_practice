@@ -1,13 +1,12 @@
 # Docker 기반 Kafka 실행법 
 
----
 
-###깃허브 클론
+### 깃허브 클론
 ```
 git clone https://github.com/wurstmeister/kafka-docker
 ```
 
-###docker-compose-single-broker.yml 수정
+### docker-compose-single-broker.yml 수정
 * Windows에서 실행시 `/bin/sh: illegal option -` 에러 발생
 
     ```
