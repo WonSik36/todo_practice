@@ -15,7 +15,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer no;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String id;
 
     @Column(nullable = false)
@@ -25,10 +25,14 @@ public class User {
     private String username;
 
     public void updatePassword(String cur, String next) {
-        if(!password.equals(cur))
+        if(!comparePassword(cur))
             throw new IllegalStateException("Password is not equal");
 
         this.password = next;
+    }
+
+    public boolean comparePassword(String input) {
+        return this.password.equals(input);
     }
 
     @Builder

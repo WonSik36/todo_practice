@@ -23,13 +23,16 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow();
 
-        if(passwordCheck(user.getPassword(), password))
+        if(user.comparePassword(password))
             throw new InvalidPasswordException();
 
         return UserDto.of(user);
     }
 
-    private boolean passwordCheck(String origin, String input) {
-        return origin.equals(input);
+    public void changePassword(String userId, String password, String next) {
+        User user = userRepository.findById(userId)
+                .orElseThrow();
+
+        user.updatePassword(password, next);
     }
 }
